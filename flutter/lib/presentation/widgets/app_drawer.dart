@@ -15,6 +15,7 @@ import '../providers/auth_provider.dart';
 import '../providers/category_provider.dart';
 import '../providers/task_provider.dart';
 import '../screens/agenda/agenda_screen.dart';
+import '../screens/auth/login_screen.dart';
 import '../screens/category/categories_screen.dart';
 import '../screens/dashboard/dashboard_screen.dart';
 import '../screens/home/home_screen.dart';
@@ -58,7 +59,9 @@ class AppDrawer extends ConsumerWidget {
                     ref.read(tasksProvider.notifier).clearFilters();
                     // Volta para a Home removendo todas as telas acima
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(),
+                      ),
                       (route) => false,
                     );
                   },
@@ -190,8 +193,8 @@ class AppDrawer extends ConsumerWidget {
                     child: Text(
                       'Nenhuma categoria criada',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Colors.grey.shade500,
-                          ),
+                        color: Colors.grey.shade500,
+                      ),
                     ),
                   ),
 
@@ -291,9 +294,9 @@ class AppDrawer extends ConsumerWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.bold,
-            ),
+          color: Colors.grey.shade600,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -346,11 +349,7 @@ class AppDrawer extends ConsumerWidget {
           color: category.colorValue.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Icon(
-          Icons.folder,
-          size: 16,
-          color: category.colorValue,
-        ),
+        child: Icon(Icons.folder, size: 16, color: category.colorValue),
       ),
       title: Text(category.name),
       onTap: () {
@@ -369,10 +368,7 @@ class AppDrawer extends ConsumerWidget {
     required Color color,
   }) {
     return ListTile(
-      leading: Icon(
-        AppTheme.getPriorityIcon(priority),
-        color: color,
-      ),
+      leading: Icon(AppTheme.getPriorityIcon(priority), color: color),
       title: Text('Prioridade $title'),
       onTap: () {
         ref.read(tasksProvider.notifier).setPriorityFilter(priority);
@@ -393,9 +389,7 @@ class AppDrawer extends ConsumerWidget {
   Widget _buildFooter(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.grey.shade200),
-        ),
+        border: Border(top: BorderSide(color: Colors.grey.shade200)),
       ),
       child: SafeArea(
         child: Column(
@@ -414,9 +408,22 @@ class AppDrawer extends ConsumerWidget {
                 'Sair',
                 style: TextStyle(color: AppTheme.errorColor),
               ),
-              onTap: () {
+              onTap: () async {
+                // Fecha o drawer primeiro
                 Navigator.pop(context);
-                ref.read(authProvider.notifier).logout();
+
+                // Faz o logout
+                await ref.read(authProvider.notifier).logout();
+
+                // Navega para a tela de login removendo todas as telas da pilha
+                if (context.mounted) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (route) => false,
+                  );
+                }
               },
             ),
           ],
@@ -425,4 +432,3 @@ class AppDrawer extends ConsumerWidget {
     );
   }
 }
-
