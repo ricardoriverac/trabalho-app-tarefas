@@ -1,0 +1,65 @@
+name: my_app
+description: "Smart Task List - Aplicativo de Lista de Tarefas Inteligente com Flutter + Hasura"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # UI e Ícones
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.10+1
+  
+  # GraphQL - Conexão com Hasura
+  graphql_flutter: ^5.1.2
+  
+  # Gerenciamento de Estado
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+  
+  # Navegação
+  go_router: ^14.2.7
+  
+  # Utilitários
+  uuid: ^4.4.2
+  intl: ^0.20.2
+  equatable: ^2.0.5
+  
+  # Serialização JSON
+  json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
+  
+  # Armazenamento Local
+  shared_preferences: ^2.3.2
+  
+  # Notificações Locais
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
+  
+  # Conectividade
+  connectivity_plus: ^6.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  
+  # Geração de código
+  build_runner: ^2.4.12
+  json_serializable: ^6.8.0
+  freezed: ^2.5.7
+  riverpod_generator: ^2.4.3
+
+flutter:
+  uses-material-design: true
+  
+  # Assets (descomentar quando adicionar imagens)
+  # assets:
+  #   - assets/images/
+  #   - assets/icons/
